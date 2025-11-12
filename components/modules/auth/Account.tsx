@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import { Session } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Avatar } from './Avatar'
 //import { supabase } from '../lib/supabase'
 
 export function Account({ session }: { session: Session }) {
@@ -79,6 +80,14 @@ export function Account({ session }: { session: Session }) {
 
   return (
     <View style={styles.container}>
+      <Avatar
+        size={200}
+        url={avatarUrl}
+        onUpload={(url: string) => {
+          setAvatarUrl(url)
+          updateProfile({ username, website, avatar_url: url })
+        }}
+      />
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Text>Email</Text>
         <TextInput  value={session?.user?.email}
