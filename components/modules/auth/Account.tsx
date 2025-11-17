@@ -3,7 +3,6 @@ import { Session } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { Avatar } from './Avatar'
-//import { supabase } from '../lib/supabase'
 
 export function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true)
@@ -81,7 +80,7 @@ export function Account({ session }: { session: Session }) {
   return (
     <View style={styles.container}>
       <Avatar
-        size={200}
+        size={150}
         url={avatarUrl}
         onUpload={(url: string) => {
           setAvatarUrl(url)
@@ -89,33 +88,41 @@ export function Account({ session }: { session: Session }) {
         }}
       />
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Text>Email</Text>
-        <TextInput  value={session?.user?.email}
-        readOnly  />
+        <Text style={styles.textC}>Email</Text>
+        <TextInput
+          style={styles.input}
+          value={session?.user?.email}
+          readOnly/>
       </View>
       <View style={styles.verticallySpaced}>
-        <Text>Username</Text>
-        <TextInput  value={username || ''} onChangeText={(text) => setUsername(text)} />
+        <Text style={styles.textC}>Username</Text>
+        <TextInput
+          style={styles.input} value={username || ''} onChangeText={(text) => setUsername(text)}
+        />
       </View>
       <View style={styles.verticallySpaced}>
-        <Text>Website</Text>
-        <TextInput value={website || ''} onChangeText={(text) => setWebsite(text)} />
+        <Text style={styles.textC}>Website</Text>
+        <TextInput
+          style={styles.input} value={website || ''} onChangeText={(text) => setWebsite(text)}
+        />
       </View>
 
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <TouchableOpacity
-          
+          style={styles.butt}
           onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
           disabled={loading}
         >
-            <Text>{loading ? 'Cargando ...' : 'Actualizar'}</Text>
+          <Text style={styles.buttonText}>
+            {loading ? 'Cargando ...' : 'Actualizar'}
+          </Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.verticallySpaced}>
-        <TouchableOpacity  onPress={() => supabase.auth.signOut()} >
-            <Text>Sing Out</Text>
-            </TouchableOpacity>
+        <TouchableOpacity style={styles.butt} onPress={() => supabase.auth.signOut()}>
+          <Text style={styles.buttonText}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -123,15 +130,43 @@ export function Account({ session }: { session: Session }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    flex: 1,
+    marginTop: 20,
+    padding: 20,
+    backgroundColor: '#f0f0f0',
   },
   verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: 10,
+    paddingBottom: 10,
     alignSelf: 'stretch',
   },
   mt20: {
     marginTop: 20,
+  },
+  textC: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#0f0f0fff',
+    marginBottom: 5,
+  },
+  input: {
+    height: 40,
+    borderColor: '#d5d2d2ff',
+    borderWidth: 1,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    backgroundColor: '#fcf9f9ff',
+    color: '#0a0a0aff',
+  },
+  butt: {
+    backgroundColor: '#325eabec',//#44a647ff
+    padding: 12,
+    borderRadius: 25,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fbfafaff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 })

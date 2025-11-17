@@ -1,7 +1,7 @@
 //galeria
 //botón para añadir la imagen
 import React, { useState } from "react";
-import { FlatList, Image, StyleSheet, View } from "react-native";
+import { FlatList, Image, ImageBackground, StyleSheet, View } from "react-native";
 import { ImagePicker } from "./components/ImagePicker";
 
 export function GalleryView() {
@@ -22,6 +22,7 @@ export function GalleryView() {
   );
 
   return (
+    <ImageBackground source={require("@/assets/images/baby.jpeg")}  style={styles.fondo}>
     <View style={styles.container}
     > 
     {/*selector de imagen */}
@@ -36,6 +37,7 @@ export function GalleryView() {
         renderItem={renderItem}
       />
     </View>
+    </ImageBackground>
   ); 
 }
 const styles = StyleSheet.create({
@@ -55,4 +57,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 5,
   },
+  fondo:{
+    flex:1,
+    justifyContent: 'center',
+  }
 });

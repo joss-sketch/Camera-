@@ -27,7 +27,8 @@ container:{
     padding:60,
     justifyContent:'center',
     alignItems:'center',
-    gap:20
+    gap:20,
+    marginTop:300
 }, 
 text:{
    fontWeight:'bold',
@@ -37,8 +38,8 @@ text:{
 butt:{
     paddingVertical:12,
     borderWidth:1,
-    borderRadius:30,
-    width:'90%',
+    borderRadius:28,
+    width:'95%',
     alignItems:'center',
     backgroundColor:'#ba1313ff'
 },
