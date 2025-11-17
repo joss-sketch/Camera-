@@ -49,22 +49,24 @@ export function Login() {
   return (
     <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Text> Email</Text>
+        <Text style={styles.text3}> Email</Text>
         <TextInput
           onChangeText={(text) => setEmail(text)}
           value={email}
           placeholder="email@address.com"
           autoCapitalize={'none'}
+          style={styles.inputText}
         />
       </View>
       <View style={styles.verticallySpaced}>
-        <Text> Password </Text>
+        <Text style={styles.text3}> Password </Text>
         <TextInput
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}
           placeholder="Password"
           autoCapitalize={'none'}
+          style={styles.inputText}
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
@@ -73,7 +75,7 @@ export function Login() {
         style={styles.button}
         onPress={() => signInWithEmail()} 
         >   
-        <Text>Sing in</Text>
+        <Text style={styles.text5} >Sing in</Text>
         </TouchableOpacity>
 
       </View>
@@ -81,7 +83,7 @@ export function Login() {
         <TouchableOpacity  disabled={loading} 
         style={styles.button}
         onPress={() => signUpWithEmail()} >
-            <Text>Sing up</Text>
+            <Text style={styles.text5}>Sing up</Text>
         </TouchableOpacity>
 
       </View>
@@ -104,10 +106,33 @@ const styles = StyleSheet.create({
   },
   button:{
     justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#2d2929ff',
-        padding: 10,
-        marginTop: 15,
-        borderRadius: 12,
-  }
+    alignItems: 'center',
+    backgroundColor: '#2d2929ff',
+    padding: 10,
+    marginTop: 15,
+    borderRadius: 12,
+  }, 
+  inputText:{
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    fontSize: 18,
+  },
+  text3:{
+    fontSize: 16,
+    fontWeight: 'bold',
+    },
+  SingText:{
+    fontWeight:'bold',
+    marginLeft:5,
+    color:'#080808ff',
+    alignContent:'center'
+    },
+  text5:{
+    fontSize: 24,
+    fontWeight:'light',
+    color: '#eee8e8ff',
+    },
 })
