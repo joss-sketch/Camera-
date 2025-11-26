@@ -19,6 +19,12 @@ export function HomeView (){
               style={styles.butt}>
                 <Text style={styles.text}>Galeria</Text>
             </TouchableOpacity>
+
+             <TouchableOpacity
+            onPress={() => router.push('/notas')}
+              style={styles.butt}>
+                <Text style={styles.text}>Notas</Text>
+            </TouchableOpacity>
         </View>
     );
 }
