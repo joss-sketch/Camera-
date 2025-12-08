@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
     color: "#222",
     marginBottom: 10,
   },
-
   input: {
     width: "100%",
     height: 45,
@@ -117,9 +116,7 @@ const styles = StyleSheet.create({
     color: "#333",
     fontSize: 16,
    marginBottom:15,
-
   },
-
   butt: {
     width: "80%",
     paddingVertical: 12,
@@ -127,19 +124,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#33cc5a",
   },
-
   textButt: {
     fontWeight: "bold",
     fontSize: 18,
     color: "#fff",
   },
-
   containButt: {
     width: "100%",
-    //justifyContent: "center",
     alignItems: "center",
     gap: 20,
     marginTop: 20,
-
   },
 });
