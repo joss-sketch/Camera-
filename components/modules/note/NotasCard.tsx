@@ -25,8 +25,6 @@ export function NotasCard({note, onEdit, onDelete}: Props)
         </View>
       </View> 
     </View>
-        
-
     );
 }
 const styles = StyleSheet.create({
@@ -40,21 +38,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 6,
-
     marginVertical: 15,
   },
-
   infoContainer: {
     width: "100%",
   },
-
   title: {
     fontSize: 22,
     fontWeight: "700",
     color: "#0d0d0d",
     marginBottom: 4,
   },
-
   descrip: {
     fontSize: 16,
     fontWeight: "400",
@@ -62,13 +56,12 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginBottom: 10,
   },
-
   date: {
     fontSize: 13,
     color: "#888",
     marginTop: 5,
     fontStyle: "italic",
-      alignSelf: "flex-end",  // ← Esto la manda a la derecha
+    alignSelf: "flex-end",  // Esto la manda a la derecha
   },
   buttEd:{
     flexDirection:'row',
