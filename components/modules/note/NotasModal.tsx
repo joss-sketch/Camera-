@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-
   modalContent: {
     backgroundColor: "#ffffff",
     width: "85%",
@@ -99,9 +98,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     gap: 20,
-   
   },
-
   addNota: {
     fontWeight: "bold",
     fontSize: 22,
