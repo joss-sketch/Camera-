@@ -4,8 +4,6 @@ import { Note } from "./domain/note.interface";
 import { deleteNote, getNotas, saveNote } from "./infraestructure/datasource";
 import { NotasCard } from "./NotasCard";
 import { NotasModal } from "./NotasModal";
-
-
 export function NotasView() {
   const [notes, setNotes] = useState<Note[]>([]);
   //Estado para que la nota se va a editar o crear
@@ -44,7 +42,6 @@ export function NotasView() {
         }
       })
   }
-
   const onCancelModal = () => {
     setSelected(null);
   }
@@ -66,7 +63,6 @@ export function NotasView() {
     const deleted = await deleteNote(note);
     if (deleted){
       setNotes(notes.filter((n) => n.id !== note.id));
-
     }
   };
 

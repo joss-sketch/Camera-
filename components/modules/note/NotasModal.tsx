@@ -6,7 +6,6 @@ type Props = {
   note: Note | null;
   onCancel: () => void;
   onSave: (note: Note) => void;
-
 }
 export function NotasModal(
   {
@@ -25,7 +24,6 @@ export function NotasModal(
       ...note,//tomar la info original de la nota
       tittle: title,//pasar el nuevo titulo
       description,
-
     })
   }
   //monitorear la propiedad note
@@ -34,24 +32,20 @@ export function NotasModal(
     //si hay una nota , leer el tituolo o tomarlo si no, poner una cadena vacía
     setTitle(note?.tittle || "");
     //funcion para mandar a guardar la nota
-
     setDescription(note?.description || "");
     //monitorea o esta observando la propiedad note
   }, [note]);
   if (!note) {
     return null;
   }
-
   return (
     <>
-
     <Modal
       visible={!!note}
       transparent
       animationType="slide"
     >
         <View style={styles.modalContainer}>
-
           <View style={styles.modalContent}>
             <ScrollView>
             <Text style={styles.addNota}>{note.id ? 'Editar nota' : 'Agregar Nota'}</Text>
