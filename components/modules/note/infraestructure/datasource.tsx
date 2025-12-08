@@ -39,7 +39,6 @@ export async function saveNote(note: Note): Promise<Note | null> {
             .update({
                 tittle: note.tittle,
                 description: note.description,
-
             })
             .eq('id', note.id)
             .select()
@@ -47,4 +46,16 @@ export async function saveNote(note: Note): Promise<Note | null> {
         //o retornar null
         return data !== null ? data[0] : null;
     }
+}
+export async function deleteNote(note: Note): Promise<Note | null> {
+//export function deleteNote (note: Note): Promise <Note | null>{
+    const {data, error} = await supabase
+    .from ('notes')
+    .delete()
+    .eq('id', note.id)
+    .select();
+    if (error){
+        return null;
+    }
+    return data !== null? data [0]: null;
 }

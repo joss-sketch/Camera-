@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Note } from "./domain/note.interface";
-import { getNotas, saveNote } from "./infraestructure/datasource";
+import { deleteNote, getNotas, saveNote } from "./infraestructure/datasource";
 import { NotasCard } from "./NotasCard";
 import { NotasModal } from "./NotasModal";
 
@@ -60,6 +60,16 @@ export function NotasView() {
         Alert.alert("No se pudo cargar las fechas");
       });
   }, []);
+  //Eliminar notas
+  const onDelete = async (note: Note) => {
+    Alert.alert("Estas seguro de querer eliminar la nota?");
+    const deleted = await deleteNote(note);
+    if (deleted){
+      setNotes(notes.filter((n) => n.id !== note.id));
+
+    }
+  };
+
   return (
     <View>
       {/*Mostras las fotos con flatlist*/}
@@ -69,6 +79,8 @@ export function NotasView() {
         renderItem={({ item }) => (
           <NotasCard
             note={item}
+            onDelete={() => onDelete(item)}
+            onEdit={setSelected}
           />
         )}
       />
@@ -77,6 +89,7 @@ export function NotasView() {
         onPress={addNote}>
         <Text style={styles.button}>Agregar</Text>
       </TouchableOpacity>
+
       <NotasModal
         note={selected}
         onSave={onNoteChanged}

@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Note } from "./domain/note.interface";
 
 type Props = {
     note: Note,
+    onDelete: (note: Note) => void;
+    onEdit: (note: Note) => void;
 }
-export function NotasCard({note}: Props)
+export function NotasCard({note, onEdit, onDelete}: Props)
 {
     return(
     <View style={styles.card}>
@@ -12,6 +14,15 @@ export function NotasCard({note}: Props)
         <Text style={styles.title}>{note.tittle}</Text>
         <Text style={styles.descrip}>{note.description}</Text>
         <Text style={styles.date}>{note.date.toString()}</Text>
+        <View style={styles.buttEd}>
+          <TouchableOpacity style={styles.butt} onPress={() => onEdit(note)}
+          >
+           <Text style={styles.textButt}>Editar</Text> 
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.butt} onPress={() => onDelete(note)}>
+            <Text style={styles.textButt}>Eliminar</Text>
+          </TouchableOpacity>
+        </View>
       </View> 
     </View>
         
@@ -58,6 +69,21 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontStyle: "italic",
       alignSelf: "flex-end",  // ← Esto la manda a la derecha
-
   },
-});
+  buttEd:{
+    flexDirection:'row',
+    marginTop:10,
+    justifyContent:"space-between"
+  },
+  butt:{
+    backgroundColor:"#53d44aff",
+    padding:8,
+    borderRadius:8,
+    width:"45%"
+  },
+  textButt:{
+    color:'#f9f7f7ff',
+    textAlign:"center",
+    fontWeight:'bold'
+  }
+})
