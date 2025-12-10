@@ -26,7 +26,7 @@ export function GalleryView() {
 
     if (data) {
     const rutas = data.map((img) => img.ruta);
-    console.log("Imagenes de supabase", rutas);  // ← AQUI
+    console.log("Imagenes de supabase", rutas);
     setImages(rutas);
       
     }
@@ -73,28 +73,56 @@ export function GalleryView() {
   };
 
   // Función para transformar URL pública a ruta del storage
-  function extractPath(publicUrl: string) {
-    return publicUrl.split("/public/")[1];  
-  }
-  // Eliminar imagen del storage
-  async function deleteImage(url: string) {
-    try {
-      const path = extractPath(url);
+ function extractPath(publicUrl: string) {
+  const parts = publicUrl.split("/avatars/");
+  return parts[1] ? `avatars/${parts[1]}` : null;
+}
 
-      const { error } = await supabase.storage
-        .from("avatars")
-        .remove([path]);
+  //Eliminar imagen 
+ async function deleteImage(url: string) {
+  Alert.alert(
+    "Eliminar imagen",
+    "¿Deseas eliminar esta imagen?",
+    [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Eliminar",
+        style: "destructive",
+        onPress: async () => {
+          try {
 
-      if (error) throw error;
+            // Obtener ruta exacta
+            const path = extractPath(url);
+            if (!path) throw new Error("No se pudo obtener la ruta del archivo");
 
-      setImages(images.filter((img) => img !== url));
+            //Eliminar del storage
+            const { error: storageError } = await supabase.storage
+              .from("avatars")
+              .remove([path]);
 
-      Alert.alert("Imagen Eliminada del storage");
-    } catch (error: any) {
-      Alert.alert("Error", error.message);
-    }
-  }
+            if (storageError) throw storageError;
 
+            //Eliminar de la tabla imagenes
+            const { error: tableError } = await supabase
+              .from("imagenes")
+              .delete()
+              .eq("ruta", url);
+
+            if (tableError) throw tableError;
+
+            //Quitar de la app
+            setImages(images.filter((img) => img !== url));
+            setSelectedImage(null);
+
+            Alert.alert("Imagen Eliminada");
+          } catch (error: any) {
+            Alert.alert("Error al eliminar", error.message);
+          }
+        },
+      },
+    ]
+  );
+}
   // Render de cada imagen
   const renderItem = ({ item }: { item: string }) => (
     <Pressable
@@ -104,9 +132,6 @@ export function GalleryView() {
       <Image source={{ uri: item }} style={styles.image} />
     </Pressable>
   );
-  //estaod de eliminacion
-  const [deleting, setDeleting] = useState(false);
-
 
   return (
     <ImageBackground
@@ -114,11 +139,9 @@ export function GalleryView() {
       style={styles.fondo}
     >
       <View style={styles.container}>
-
-        {/* Botón para seleccionar imagen */}
+        {/* Selecctor de imagen */}
         <ImagePicker onImageSelected={onAdded} />
-
-        {/* Galería */}
+        {/* Galería en la app */}
         <FlatList
           data={images}
           keyExtractor={(item, index) => index.toString()}
@@ -126,25 +149,23 @@ export function GalleryView() {
           contentContainerStyle={styles.gallery}
           renderItem={renderItem}
         />
-
-        {/* Modal de imagen completa */}
+        {/* Modal de imagen */}
         <Modal visible={!!selectedImage} transparent={true}>
           <View style={styles.modalContainer}>
             <Image
               source={{ uri: selectedImage || "" }}
-              style={styles.fullImage}
+              style={styles.tamImage}
             />
-
             <Pressable
-              style={styles.closeButton}
+              style={styles.buttCerrar}
               onPress={() => setSelectedImage(null)}
             >
               <Text style={styles.closeText}>Cerrar</Text>
             </Pressable>
-            <Pressable style={[styles.closeButton, { backgroundColor: "red" }]}
+            <Pressable style={[styles.buttCerrar, { backgroundColor: "#a20f0fff" }]}
               onPress={() => selectedImage && deleteImage (selectedImage)}
             >
-               <Text style={[styles.closeText, { color: "#fff" }]}>Eliminar</Text>
+               <Text style={[styles.closeText, { color: "#f7f4f4ff" }]}>Eliminar</Text>
             </Pressable>
           </View>
         </Modal>
@@ -181,12 +202,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  fullImage: {
+  tamImage: {
     width: "90%",
     height: "70%",
     borderRadius: 10,
   },
-  closeButton: {
+  buttCerrar: {
     marginTop: 20,
     padding: 12,
     backgroundColor: "#fff",
